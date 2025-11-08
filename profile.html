@@ -1,0 +1,141 @@
+<!-- Profile Page -->
+<div class="page" id="profile">
+  <h1>Profile Management</h1>
+
+  <div class="profile-container">
+    <!-- Profile Photo Section -->
+    <div class="photo-section">
+      <img src="https://via.placeholder.com/150" alt="Profile Photo" id="profile-pic">
+      <div class="photo-buttons">
+        <input type="file" id="photo-input" accept="image/*" style="display:none;">
+        <button class="btn" id="change-photo">Change Photo</button>
+        <button class="btn" id="remove-photo">Remove Photo</button>
+      </div>
+    </div>
+
+    <!-- Info Form -->
+    <form id="profile-form">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Your Name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="university">University</label>
+        <input type="text" id="university" placeholder="University Name" required>
+      </div>
+      <div class="form-group">
+        <label for="bio">Bio</label>
+        <textarea id="bio" placeholder="Tell something about yourself..." rows="4"></textarea>
+      </div>
+      <button type="submit" class="settings-logout">Save Changes</button>
+    </form>
+  </div>
+
+  <style>
+    .profile-container {
+      display:flex;
+      flex-direction:row;
+      gap:40px;
+      flex-wrap:wrap;
+      margin-top:30px;
+    }
+
+    /* Photo Section */
+    .photo-section {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:15px;
+      flex:1;
+      min-width:200px;
+    }
+    .photo-section img {
+      width:150px;
+      height:150px;
+      border-radius:50%;
+      object-fit:cover;
+      border:3px solid var(--secondary);
+    }
+    .photo-buttons button {
+      margin-top:5px;
+      padding:8px 15px;
+      border:none;
+      border-radius:12px;
+      background-color: var(--secondary);
+      color: var(--primary);
+      cursor:pointer;
+      font-weight:500;
+      transition:0.3s;
+    }
+    .photo-buttons button:hover { background-color: var(--accent); }
+
+    /* Form Section */
+    #profile-form {
+      flex:2;
+      min-width:250px;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+    .form-group { display:flex; flex-direction:column; }
+    .form-group label { margin-bottom:5px; font-weight:600; color:var(--secondary); }
+    .form-group input, .form-group textarea {
+      padding:10px 15px;
+      border-radius:12px;
+      border:1px solid #ccc;
+      outline:none;
+      font-size:14px;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--secondary); }
+
+    /* Responsive */
+    @media(max-width:768px){
+      .profile-container { flex-direction:column; gap:20px; }
+      #profile-form { width:100%; }
+      .photo-section img { width:120px; height:120px; }
+    }
+  </style>
+
+  <script>
+    const profilePic = document.getElementById('profile-pic');
+    const photoInput = document.getElementById('photo-input');
+    const changePhotoBtn = document.getElementById('change-photo');
+    const removePhotoBtn = document.getElementById('remove-photo');
+    const profileForm = document.getElementById('profile-form');
+
+    // Change photo
+    changePhotoBtn.addEventListener('click', () => photoInput.click());
+    photoInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if(file){
+        const reader = new FileReader();
+        reader.onload = () => profilePic.src = reader.result;
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Remove photo
+    removePhotoBtn.addEventListener('click', () => {
+      profilePic.src = 'https://via.placeholder.com/150';
+      photoInput.value = '';
+    });
+
+    // Save profile info (demo)
+    profileForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        university: document.getElementById('university').value,
+        bio: document.getElementById('bio').value,
+        photo: profilePic.src
+      };
+      console.log('Profile saved:', data);
+      alert('Profile saved successfully!');
+    });
+  </script>
+</div>
