@@ -30,7 +30,6 @@
       border-radius: 12px 0 0 12px;
       transition: 0.3s;
     }
-
     .sidebar h2 {
       margin-bottom: 50px;
       text-align: center;
@@ -38,7 +37,6 @@
       font-weight: 700;
       letter-spacing: 1px;
     }
-
     .nav-links { list-style:none; padding:0; }
     .nav-links li {
       margin-bottom: 20px;
@@ -83,13 +81,12 @@
     .card h3 { font-size:18px; margin-bottom:10px; color: var(--secondary); }
     .card p { font-size:14px; color: var(--text-dark); }
 
-    /* Page sections hidden by default */
+    /* Pages */
     .page { display:none; }
     .page.active { display:block; }
 
-    /* Logout button in settings */
-    .settings-logout {
-      margin-top: 30px;
+    /* Buttons */
+    .settings-logout, .photo-buttons button, #chat-form button {
       padding: 12px 20px;
       background-color: var(--secondary);
       color: var(--primary);
@@ -99,37 +96,91 @@
       cursor:pointer;
       transition:0.3s;
     }
-    .settings-logout:hover { background-color: var(--accent); }
+    .settings-logout:hover, .photo-buttons button:hover, #chat-form button:hover { background-color: var(--accent); }
 
-    /* Hamburger menu */
-    .hamburger {
-      display: none;
-      font-size: 28px;
-      cursor: pointer;
-      color: var(--primary);
-      margin-bottom: 20px;
+    /* Profile */
+    .profile-container {
+      display:flex;
+      flex-direction:row;
+      gap:40px;
+      flex-wrap:wrap;
+      margin-top:30px;
     }
+    .photo-section {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:15px;
+      flex:1;
+      min-width:200px;
+    }
+    .photo-section img {
+      width:150px;
+      height:150px;
+      border-radius:50%;
+      object-fit:cover;
+      border:3px solid var(--secondary);
+    }
+    #profile-form {
+      flex:2;
+      min-width:250px;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+    .form-group { display:flex; flex-direction:column; }
+    .form-group label { margin-bottom:5px; font-weight:600; color:var(--secondary); }
+    .form-group input, .form-group textarea {
+      padding:10px 15px;
+      border-radius:12px;
+      border:1px solid #ccc;
+      outline:none;
+      font-size:14px;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--secondary); }
+
+    /* Chat */
+    .chat-container { display:flex; gap:20px; margin-top:20px; flex-wrap:wrap; }
+    .contacts, .chat-window {
+      background-color: var(--card-bg);
+      padding:20px;
+      border-radius:16px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    }
+    .contacts { flex:1; min-width:200px; height:400px; overflow-y:auto; }
+    .contacts h3 { margin-bottom:15px; color: var(--secondary); }
+    .contacts ul { list-style:none; padding:0; }
+    .contacts li { padding:10px 12px; margin-bottom:10px; border-radius:12px; cursor:pointer; transition:0.3s; }
+    .contacts li:hover, .contacts li.active { background-color: var(--accent); color: var(--primary); }
+
+    .chat-window { flex:2; min-width:250px; display:flex; flex-direction:column; height:400px; overflow:hidden; }
+    .messages { flex:1; padding:15px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; }
+    .message { max-width:70%; padding:10px 15px; border-radius:16px; font-size:14px; line-height:1.4; }
+    .message.sent { background-color: var(--secondary); color: var(--primary); align-self:flex-end; }
+    .message.received { background-color:#ddd; color:#282F3C; align-self:flex-start; }
+    #chat-form { display:flex; padding:10px; border-top:1px solid #ccc; background-color: var(--primary); }
+    #chat-input { flex:1; padding:10px 15px; border-radius:12px; border:1px solid #ccc; outline:none; font-size:14px; }
+    #chat-input:focus { border-color: var(--secondary); }
+
+    /* Hamburger */
+    .hamburger { display:none; font-size:28px; cursor:pointer; color: var(--primary); margin-bottom:20px; }
 
     /* Responsive */
     @media (max-width:768px) {
       body { flex-direction: column; }
-      .sidebar {
-        width: 100%;
-        flex-direction: column;
-        padding: 10px 20px;
-        border-radius:0;
-      }
+      .sidebar { width: 100%; flex-direction: column; padding: 10px 20px; border-radius:0; }
       .sidebar h2 { display:none; }
-      .nav-links {
-        display: none;
-        flex-direction: column;
-      }
-      .nav-links.show { display: flex; }
+      .nav-links { display:none; flex-direction:column; }
+      .nav-links.show { display:flex; }
       .nav-links li { margin-bottom:10px; }
       .main-content { padding:20px; border-radius:0; }
       .card-container { grid-template-columns:1fr; }
-      .settings-logout { width:100%; }
+      .settings-logout, #profile-form { width:100%; }
       .hamburger { display:block; }
+      .profile-container { flex-direction:column; gap:20px; }
+      .photo-section img { width:120px; height:120px; }
+      .contacts, .chat-window { width:100%; height:auto; }
+      .chat-window { height:300px; }
     }
   </style>
 </head>
@@ -149,7 +200,7 @@
 
   <!-- Main content -->
   <div class="main-content">
-    <!-- Dashboard Page -->
+    <!-- Dashboard -->
     <div class="page active" id="dashboard">
       <div class="header">
         <h1>Welcome, Student!</h1>
@@ -173,357 +224,84 @@
       </div>
     </div>
 
-    <!-- Profile Page -->
-    <!-- Profile Page -->
-<div class="page" id="profile">
-  <h1>Profile Management</h1>
-
-  <div class="profile-container">
-    <!-- Profile Photo Section -->
-    <div class="photo-section">
-      <img src="https://via.placeholder.com/150" alt="Profile Photo" id="profile-pic">
-      <div class="photo-buttons">
-        <input type="file" id="photo-input" accept="image/*" style="display:none;">
-        <button class="btn" id="change-photo">Change Photo</button>
-        <button class="btn" id="remove-photo">Remove Photo</button>
+    <!-- Profile -->
+    <div class="page" id="profile">
+      <h1>Profile Management</h1>
+      <div class="profile-container">
+        <div class="photo-section">
+          <img src="https://via.placeholder.com/150" alt="Profile Photo" id="profile-pic">
+          <div class="photo-buttons">
+            <input type="file" id="photo-input" accept="image/*" style="display:none;">
+            <button class="btn" id="change-photo">Change Photo</button>
+            <button class="btn" id="remove-photo">Remove Photo</button>
+          </div>
+        </div>
+        <form id="profile-form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your Name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="university">University</label>
+            <input type="text" id="university" placeholder="University Name" required>
+          </div>
+          <div class="form-group">
+            <label for="bio">Bio</label>
+            <textarea id="bio" placeholder="Tell something about yourself..." rows="4"></textarea>
+          </div>
+          <button type="submit" class="settings-logout">Save Changes</button>
+        </form>
       </div>
     </div>
 
-    <!-- Info Form -->
-    <form id="profile-form">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" placeholder="Your Name" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="you@example.com" required>
-      </div>
-      <div class="form-group">
-        <label for="university">University</label>
-        <input type="text" id="university" placeholder="University Name" required>
-      </div>
-      <div class="form-group">
-        <label for="bio">Bio</label>
-        <textarea id="bio" placeholder="Tell something about yourself..." rows="4"></textarea>
-      </div>
-      <button type="submit" class="settings-logout">Save Changes</button>
-    </form>
-  </div>
-
-  <style>
-    .profile-container {
-      display:flex;
-      flex-direction:row;
-      gap:40px;
-      flex-wrap:wrap;
-      margin-top:30px;
-    }
-
-    /* Photo Section */
-    .photo-section {
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:15px;
-      flex:1;
-      min-width:200px;
-    }
-    .photo-section img {
-      width:150px;
-      height:150px;
-      border-radius:50%;
-      object-fit:cover;
-      border:3px solid var(--secondary);
-    }
-    .photo-buttons button {
-      margin-top:5px;
-      padding:8px 15px;
-      border:none;
-      border-radius:12px;
-      background-color: var(--secondary);
-      color: var(--primary);
-      cursor:pointer;
-      font-weight:500;
-      transition:0.3s;
-    }
-    .photo-buttons button:hover { background-color: var(--accent); }
-
-    /* Form Section */
-    #profile-form {
-      flex:2;
-      min-width:250px;
-      display:flex;
-      flex-direction:column;
-      gap:20px;
-    }
-    .form-group { display:flex; flex-direction:column; }
-    .form-group label { margin-bottom:5px; font-weight:600; color:var(--secondary); }
-    .form-group input, .form-group textarea {
-      padding:10px 15px;
-      border-radius:12px;
-      border:1px solid #ccc;
-      outline:none;
-      font-size:14px;
-    }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--secondary); }
-
-    /* Responsive */
-    @media(max-width:768px){
-      .profile-container { flex-direction:column; gap:20px; }
-      #profile-form { width:100%; }
-      .photo-section img { width:120px; height:120px; }
-    }
-  </style>
-
-  <script>
-    const profilePic = document.getElementById('profile-pic');
-    const photoInput = document.getElementById('photo-input');
-    const changePhotoBtn = document.getElementById('change-photo');
-    const removePhotoBtn = document.getElementById('remove-photo');
-    const profileForm = document.getElementById('profile-form');
-
-    // Change photo
-    changePhotoBtn.addEventListener('click', () => photoInput.click());
-    photoInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if(file){
-        const reader = new FileReader();
-        reader.onload = () => profilePic.src = reader.result;
-        reader.readAsDataURL(file);
-      }
-    });
-
-    // Remove photo
-    removePhotoBtn.addEventListener('click', () => {
-      profilePic.src = 'https://via.placeholder.com/150';
-      photoInput.value = '';
-    });
-
-    // Save profile info (demo)
-    profileForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const data = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        university: document.getElementById('university').value,
-        bio: document.getElementById('bio').value,
-        photo: profilePic.src
-      };
-      console.log('Profile saved:', data);
-      alert('Profile saved successfully!');
-    });
-  </script>
-</div>
-
-
-    <!-- Settings Page -->
+    <!-- Settings -->
     <div class="page" id="settings">
       <h1>Settings</h1>
       <p>Adjust your preferences here...</p>
-      <button class="settings-logout">Logout</button>
+      <button class="settings-logout" id="logout">Logout</button>
     </div>
 
-    <!-- Notifications Page -->
+    <!-- Notifications -->
     <div class="page" id="notifications">
       <h1>Notifications</h1>
       <p>All your alerts will appear here...</p>
     </div>
 
-    <!-- Chat Page -->
-    <!-- Chat Page -->
-<div class="page" id="chat">
-  <h1>Chat</h1>
-
-  <div class="chat-container">
-    <!-- Contacts Sidebar -->
-    <div class="contacts">
-      <h3>Contacts</h3>
-      <ul id="contact-list">
-        <li class="active">Sohail Jadhav</li>
-        <li>Jane Doe</li>
-        <li>John Smith</li>
-        <li>Emily Watson</li>
-      </ul>
-    </div>
-
-    <!-- Chat Window -->
-    <div class="chat-window">
-      <div class="messages" id="messages">
-        <!-- Messages will appear here -->
+    <!-- Chat -->
+    <div class="page" id="chat">
+      <h1>Chat</h1>
+      <div class="chat-container">
+        <div class="contacts">
+          <h3>Contacts</h3>
+          <ul id="contact-list">
+            <li class="active">Sohil Jadhav</li>
+            <li>Jane Doe</li>
+            <li>John Smith</li>
+            <li>Emily Watson</li>
+          </ul>
+        </div>
+        <div class="chat-window">
+          <div class="messages" id="messages"></div>
+          <form id="chat-form">
+            <input type="text" id="chat-input" placeholder="Type a message..." required>
+            <button type="submit">Send</button>
+          </form>
+        </div>
       </div>
-      <form id="chat-form">
-        <input type="text" id="chat-input" placeholder="Type a message..." required>
-        <button type="submit">Send</button>
-      </form>
     </div>
   </div>
 
-  <style>
-    .chat-container {
-      display:flex;
-      gap:20px;
-      margin-top:20px;
-      flex-wrap:wrap;
-    }
-
-    /* Contacts Sidebar */
-    .contacts {
-      flex:1;
-      min-width:200px;
-      background-color: var(--card-bg);
-      padding:20px;
-      border-radius:16px;
-      box-shadow:0 8px 20px rgba(0,0,0,0.08);
-      height:400px;
-      overflow-y:auto;
-    }
-    .contacts h3 { margin-bottom:15px; color: var(--secondary); }
-    .contacts ul { list-style:none; padding:0; }
-    .contacts li {
-      padding:10px 12px;
-      margin-bottom:10px;
-      border-radius:12px;
-      cursor:pointer;
-      transition:0.3s;
-    }
-    .contacts li:hover,
-    .contacts li.active { background-color: var(--accent); color: var(--primary); }
-
-    /* Chat Window */
-    .chat-window {
-      flex:2;
-      min-width:250px;
-      display:flex;
-      flex-direction:column;
-      background-color: var(--card-bg);
-      border-radius:16px;
-      box-shadow:0 8px 20px rgba(0,0,0,0.08);
-      height:400px;
-      overflow:hidden;
-    }
-
-    .messages {
-      flex:1;
-      padding:15px;
-      overflow-y:auto;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .message {
-      max-width:70%;
-      padding:10px 15px;
-      border-radius:16px;
-      font-size:14px;
-      line-height:1.4;
-    }
-
-    .message.sent {
-      background-color: var(--secondary);
-      color: var(--primary);
-      align-self:flex-end;
-    }
-
-    .message.received {
-      background-color:#ddd;
-      color:#282F3C;
-      align-self:flex-start;
-    }
-
-    /* Chat Input */
-    #chat-form {
-      display:flex;
-      padding:10px;
-      border-top:1px solid #ccc;
-      background-color: var(--primary);
-    }
-    #chat-input {
-      flex:1;
-      padding:10px 15px;
-      border-radius:12px;
-      border:1px solid #ccc;
-      outline:none;
-      font-size:14px;
-    }
-    #chat-input:focus { border-color: var(--secondary); }
-    #chat-form button {
-      margin-left:10px;
-      padding:10px 20px;
-      background-color: var(--secondary);
-      color: var(--primary);
-      border:none;
-      border-radius:12px;
-      cursor:pointer;
-      font-weight:600;
-      transition:0.3s;
-    }
-    #chat-form button:hover { background-color: var(--accent); }
-
-    /* Responsive */
-    @media(max-width:768px){
-      .chat-container { flex-direction:column; }
-      .contacts, .chat-window { width:100%; height:auto; }
-      .chat-window { height:300px; }
-    }
-  </style>
-
   <script>
-    const contactList = document.getElementById('contact-list');
-    const contacts = contactList.querySelectorAll('li');
-    const messagesDiv = document.getElementById('messages');
-    const chatForm = document.getElementById('chat-form');
-    const chatInput = document.getElementById('chat-input');
-
-    // Switch active contact
-    contacts.forEach(contact => {
-      contact.addEventListener('click', () => {
-        contacts.forEach(c => c.classList.remove('active'));
-        contact.classList.add('active');
-        messagesDiv.innerHTML = ''; // clear messages for demo
-      });
-    });
-
-    // Send message
-    chatForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const msgText = chatInput.value.trim();
-      if(msgText === '') return;
-
-      // Add sent message
-      const msgDiv = document.createElement('div');
-      msgDiv.classList.add('message', 'sent');
-      msgDiv.textContent = msgText;
-      messagesDiv.appendChild(msgDiv);
-
-      // Scroll to bottom
-      messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-      // Clear input
-      chatInput.value = '';
-
-      // Demo received message after 1 sec
-      setTimeout(() => {
-        const received = document.createElement('div');
-        received.classList.add('message', 'received');
-        received.textContent = "This is a demo reply from " + contactList.querySelector('li.active').textContent;
-        messagesDiv.appendChild(received);
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-      }, 1000);
-    });
-  </script>
-</div>
-
-
-  <script>
+    // Sidebar navigation
     const navLinks = document.querySelectorAll('.nav-links li');
     const pages = document.querySelectorAll('.page');
-    const logoutBtn = document.querySelector('.settings-logout');
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-links');
 
-    // Page navigation
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
         const targetPage = link.getAttribute('data-page');
@@ -535,15 +313,79 @@
       });
     });
 
-    // Hamburger toggle
-    hamburger.addEventListener('click', () => {
-      navMenu.classList.toggle('show');
-    });
+    hamburger.addEventListener('click', () => navMenu.classList.toggle('show'));
 
-    // Logout button
-    logoutBtn.addEventListener('click', () => {
+    // Logout
+    document.getElementById('logout').addEventListener('click', () => {
       alert('Logging out...');
       location.reload();
+    });
+
+    // Profile photo
+    const profilePic = document.getElementById('profile-pic');
+    const photoInput = document.getElementById('photo-input');
+    document.getElementById('change-photo').addEventListener('click', () => photoInput.click());
+    photoInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if(file){
+        const reader = new FileReader();
+        reader.onload = () => profilePic.src = reader.result;
+        reader.readAsDataURL(file);
+      }
+    });
+    document.getElementById('remove-photo').addEventListener('click', () => {
+      profilePic.src = 'https://via.placeholder.com/150';
+      photoInput.value = '';
+    });
+
+    // Save profile form
+    document.getElementById('profile-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        university: document.getElementById('university').value,
+        bio: document.getElementById('bio').value,
+        photo: profilePic.src
+      };
+      console.log('Profile saved:', data);
+      alert('Profile saved successfully!');
+    });
+
+    // Chat
+    const contactList = document.getElementById('contact-list');
+    const contacts = contactList.querySelectorAll('li');
+    const messagesDiv = document.getElementById('messages');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+
+    contacts.forEach(contact => {
+      contact.addEventListener('click', () => {
+        contacts.forEach(c => c.classList.remove('active'));
+        contact.classList.add('active');
+        messagesDiv.innerHTML = '';
+      });
+    });
+
+    chatForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const msgText = chatInput.value.trim();
+      if(!msgText) return;
+
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', 'sent');
+      msgDiv.textContent = msgText;
+      messagesDiv.appendChild(msgDiv);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      chatInput.value = '';
+
+      setTimeout(() => {
+        const received = document.createElement('div');
+        received.classList.add('message', 'received');
+        received.textContent = "This is a demo reply from " + contactList.querySelector('li.active').textContent;
+        messagesDiv.appendChild(received);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }, 1000);
     });
   </script>
 </body>

@@ -39,3 +39,12 @@ document.querySelectorAll('.switch-auth a').forEach(link => {
   // // Initialize Firebase
   // const app = initializeApp(firebaseConfig);
   // const analytics = getAnalytics(app);
+
+// Attach logout click using event delegation
+document.addEventListener('click', function(e) {
+  // Check if the clicked element has class "settings-logout"
+  if(e.target && e.target.classList.contains('settings-logout')){
+    alert('Logging out...');
+    window.location.href = 'index.html'; // Redirect to landing page
+  }
+});
