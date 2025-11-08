@@ -1,6 +1,5 @@
 # 🚀 Campus Connect — The Ultimate Student Collaboration Hub
 
----
 
 ## 🌟 Overview
 **Campus Connect** is a modern **web-based collaboration platform** for students to discover peers, share project ideas, and form teams for academic or creative projects. It bridges the gap between creativity and execution by creating a vibrant ecosystem of innovation, learning, and community engagement.
@@ -41,29 +40,14 @@ Existing platforms are either too professional or lack skill-based discovery. **
 
 ### 💡 Project & Idea Posting
 - Post project ideas with description, tags, and required skills  
-- Join projects, send collaboration requests, or express interest  
+- Join projects, send collaboration requests
+
+---
 
 ### 💬 Community Interaction
-- Comment, upvote, and bookmark posts  
-- Discussion threads for brainstorming & feedback  
+- Comment, upvote, and bookmark posts
+  
 
-### 📅 Event Discovery
-- Curated hackathons, workshops, and student events  
-- Filters by domain, location, or date  
-- Direct registration links  
-
----
-
-## 🚀 Additional Features
-
-### ⚡ Real-Time Collaboration
-- Live chat for project members (Firebase Realtime DB or WebSockets)  
-- Group chats, notifications, and file sharing  
-
-### 🤖 Optional AI Team Matchmaking
-- Suggests teammates based on skills, interests, and project compatibility  
-
----
 
 ## 🏗 Tech Stack
 | Frontend | Backend | Database | Authentication | Real-Time Collaboration |
@@ -74,7 +58,6 @@ Existing platforms are either too professional or lack skill-based discovery. **
 
 
 
----
 
 ## ⚡ Getting Started
 
