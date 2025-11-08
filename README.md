@@ -52,7 +52,7 @@ Existing platforms are either too professional or lack skill-based discovery. **
 ## 🏗 Tech Stack
 | Frontend | Backend | Database | Authentication | Real-Time Collaboration |
 |----------|---------|---------|----------------|------------------------|
-| HTML/CSS/JS | Node.js + Express | Firebase / MySQL | Firebase Auth | Firebase Realtime DB / WebSockets |
+| HTML/CSS/JS | Node.js  | Firebase | Firebase Auth | None |
 
 ---
 
