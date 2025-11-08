@@ -1,0 +1,53 @@
+type User @table {
+  firstName: String!
+  lastName: String!
+  email: String!
+  university: String!
+  academicProgram: String!
+  createdAt: Timestamp!
+  bio: String
+  profilePictureUrl: String
+  graduationYear: Int
+}
+
+type Skill @table {
+  name: String!
+  createdAt: Timestamp!
+}
+
+type UserSkill @table(key: ["user", "skill"]) {
+  user: User!
+  skill: Skill!
+  proficiencyLevel: String!
+}
+
+type Project @table {
+  creator: User!
+  title: String!
+  description: String!
+  projectType: String!
+  createdAt: Timestamp!
+  deadline: Timestamp
+  requirements: String
+  teamSize: Int
+}
+
+type ProjectSkill @table(key: ["project", "skill"]) {
+  project: Project!
+  skill: Skill!
+}
+
+type Application @table {
+  applicant: User!
+  project: Project!
+  status: String!
+  createdAt: Timestamp!
+  message: String
+}
+
+type Conversation @table {
+  participant1: User!
+  participant2: User!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+}

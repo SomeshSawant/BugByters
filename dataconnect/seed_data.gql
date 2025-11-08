@@ -1,0 +1,96 @@
+mutation CreateDemoData @transaction @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public.") {
+  user_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      firstName: "demouser1",
+      lastName: "lastname",
+      email: "demouser1@example.com",
+      university: "Example U",
+      academicProgram: "Basket Weaving",
+      createdAt: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      firstName: "demouser2",
+      lastName: "lastname",
+      email: "demouser2@example.com",
+      university: "Example U",
+      academicProgram: "Underwater Basket Weaving",
+      createdAt: "2024-01-01T00:00:00Z"
+    }
+  ])
+  skill_insertMany(data: [
+    {
+      id: "650e8400-e29b-41d4-a716-446655440000",
+      name: "skill1",
+      createdAt: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: "650e8400-e29b-41d4-a716-446655440001",
+      name: "skill2",
+      createdAt: "2024-01-01T00:00:00Z"
+    }
+  ])
+  userSkill_insertMany(data: [
+    {
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      skillId: "650e8400-e29b-41d4-a716-446655440000",
+      proficiencyLevel: "Beginner"
+    },
+    {
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      skillId: "650e8400-e29b-41d4-a716-446655440001",
+      proficiencyLevel: "Expert"
+    }
+  ])
+  project_insertMany(data: [
+    {
+      id: "750e8400-e29b-41d4-a716-446655440000",
+      creatorId: "550e8400-e29b-41d4-a716-446655440000",
+      title: "project1",
+      description: "example project",
+      projectType: "software",
+      createdAt: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: "750e8400-e29b-41d4-a716-446655440001",
+      creatorId: "550e8400-e29b-41d4-a716-446655440001",
+      title: "project2",
+      description: "example project",
+      projectType: "hardware",
+      createdAt: "2024-01-01T00:00:00Z"
+    }
+  ])
+  projectSkill_insertMany(data: [
+    {
+      projectId: "750e8400-e29b-41d4-a716-446655440000",
+      skillId: "650e8400-e29b-41d4-a716-446655440000"
+    },
+    {
+      projectId: "750e8400-e29b-41d4-a716-446655440001",
+      skillId: "650e8400-e29b-41d4-a716-446655440001"
+    }
+  ])
+  application_insertMany(data: [
+    {
+      applicantId: "550e8400-e29b-41d4-a716-446655440000",
+      projectId: "750e8400-e29b-41d4-a716-446655440000",
+      status: "pending",
+      createdAt: "2024-01-01T00:00:00Z"
+    },
+    {
+      applicantId: "550e8400-e29b-41d4-a716-446655440001",
+      projectId: "750e8400-e29b-41d4-a716-446655440001",
+      status: "accepted",
+      createdAt: "2024-01-01T00:00:00Z"
+    }
+  ])
+  conversation_insertMany(data: [
+    {
+      participant1Id: "550e8400-e29b-41d4-a716-446655440000",
+      participant2Id: "550e8400-e29b-41d4-a716-446655440001",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-02T00:00:00Z"
+    }
+  ])
+}
