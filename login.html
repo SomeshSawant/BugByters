@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Connect - Login</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="auth-page login-page">
+    <div class="auth-card">
+      <!-- Back to Home Button -->
+      <a href="index.html" class="btn back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+
+      <h1>Welcome Back!</h1>
+      <p class="sub-text">Login to access your Campus Connect dashboard</p>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Email</label>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn primary-btn">Login</button>
+        <p class="switch-auth">Don't have an account? <a href="signup.html">Sign Up</a></p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
