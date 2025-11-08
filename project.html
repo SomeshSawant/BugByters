@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Ideas | Campus Connect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FFFEFE;
+      --secondary: #534171;
+      --accent: #282F3C;
+      --success: #2ecc71;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #534171, #282F3C);
+      color: var(--primary);
+      display: flex;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .projects-list {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      overflow-y: auto;
+      padding-right: 10px;
+      scrollbar-width: thin;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .project-tags {
+      margin-top: 5px;
+      font-size: 0.9rem;
+      color: #cfcfcf;
+    }
+
+    .project-desc {
+      margin: 10px 0;
+      color: #ddd;
+    }
+
+    .join-btn {
+      background: var(--secondary);
+      border: none;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .join-btn:hover {
+      background: #6a58a5;
+    }
+
+    .join-btn.joined {
+      background: var(--success);
+      color: white;
+      pointer-events: none;
+      transform: scale(1.05);
+    }
+
+    .project-form {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      height: fit-content;
+    }
+
+    .project-form h2 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .project-form input,
+    .project-form textarea,
+    .project-form select {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .project-form input::placeholder,
+    .project-form textarea::placeholder {
+      color: #ccc;
+    }
+
+    .project-form button {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-weight: 600;
+    }
+
+    .project-form button:hover {
+      background: #6a58a5;
+    }
+
+    .dashboard-btn {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+    }
+
+    .dashboard-btn:hover {
+      background: #1f2530;
+    }
+    .projectTag option{
+        color: black;
+    }
+
+    @media (max-width: 850px) {
+      .container {
+        flex-direction: column;
+      }
+      .projects-list {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left Side: Project Ideas -->
+    <div class="projects-list" id="project-list">
+      <div class="project-card">
+        <div class="project-title">AI-Powered Attendance System</div>
+        <div class="project-tags">#AI #MachineLearning #FaceRecognition</div>
+        <div class="project-desc">A smart attendance tracker using facial recognition to mark student presence automatically in classrooms.</div>
+        <button class="join-btn">Join Project</button>
+      </div>
+
+      <div class="project-card">
+        <div class="project-title">EcoTrack – Carbon Footprint Tracker</div>
+        <div class="project-tags">#WebDev #Sustainability</div>
+        <div class="project-desc">A web app to help individuals track and reduce their carbon footprint by analyzing travel and lifestyle habits.</div>
+        <button class="join-btn">Join Project</button>
+      </div>
+
+      <div class="project-card">
+        <div class="project-title">IoT-Based Smart Garden</div>
+        <div class="project-tags">#IoT #EmbeddedSystems</div>
+        <div class="project-desc">Automate garden irrigation and monitor soil moisture and sunlight using IoT sensors.</div>
+        <button class="join-btn">Join Project</button>
+      </div>
+    </div>
+
+    <!-- Right Side: Form -->
+    <form class="project-form" id="projectForm">
+      <h2>Post Your Idea</h2>
+      <input type="text" id="projectTitle" placeholder="Project Title" required>
+      <textarea id="projectDesc" rows="3" placeholder="Project Description" required></textarea>
+      <select id="projectTag" required>
+        <option value="">Select Tag</option>
+        <option value="AI/ML">AI/ML</option>
+        <option value="WebDev">WebDev</option>
+        <option value="IoT">IoT</option>
+        <option value="Blockchain">Blockchain</option>
+        <option value="AppDev">AppDev</option>
+      </select>
+      <input type="text" id="skillsReq" placeholder="Required Skills (comma separated)" required>
+      <button type="submit">Post Project</button>
+      <button type="button" class="dashboard-btn" onclick="window.location.href='dashboard.html'">Go to Dashboard</button>
+    </form>
+  </div>
+
+  <script>
+    // Handle Join Button Click
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('join-btn') && !e.target.classList.contains('joined')) {
+        e.target.textContent = 'Joined';
+        e.target.classList.add('joined');
+      }
+    });
+
+    // Handle Post Project Form
+    const form = document.getElementById('projectForm');
+    const projectList = document.getElementById('project-list');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById('projectTitle').value.trim();
+      const desc = document.getElementById('projectDesc').value.trim();
+      const tag = document.getElementById('projectTag').value.trim();
+      const skills = document.getElementById('skillsReq').value.trim();
+
+      if (!title || !desc || !tag || !skills) {
+        alert("Please fill in all fields before posting!");
+        return;
+      }
+
+      const newCard = document.createElement('div');
+      newCard.classList.add('project-card');
+      newCard.innerHTML = `
+        <div class="project-title">${title}</div>
+        <div class="project-tags">#${tag} #${skills.split(',').join(' #')}</div>
+        <div class="project-desc">${desc}</div>
+        <button class="join-btn">Join Project</button>
+      `;
+
+      projectList.prepend(newCard);
+      form.reset();
+      alert("Project idea posted successfully!");
+    });
+  </script>
+</body>
+</html>

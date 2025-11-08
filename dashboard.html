@@ -182,6 +182,13 @@
       .contacts, .chat-window { width:100%; height:auto; }
       .chat-window { height:300px; }
     }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -190,11 +197,13 @@
     <div class="hamburger">☰</div>
     <h2>CampusConnect</h2>
     <ul class="nav-links">
-      <li data-page="dashboard" class="active">🏠 Dashboard</li>
-      <li data-page="profile">👤 Profile</li>
-      <li data-page="settings">⚙️ Settings</li>
-      <li data-page="notifications">🔔 Notifications</li>
-      <li data-page="chat">💬 Chat</li>
+      <li data-page="dashboard" class="active">Dashboard</li>
+      <li data-page="projects"><a href="project.html">Projects</a></li>
+      <li data-page="profile"><a href="profileM.html">Profile</a></li>
+      <li data-page="events"><a href="events.html">Events</a></li>
+      <li data-page="settings"><a href="settings.html">Settings</a></li>
+      <!-- <li data-page="notifications">Notifications</li> -->
+      <li data-page="chat">Chat</li>
     </ul>
   </div>
 
@@ -224,51 +233,11 @@
       </div>
     </div>
 
-    <!-- Profile -->
-    <div class="page" id="profile">
-      <h1>Profile Management</h1>
-      <div class="profile-container">
-        <div class="photo-section">
-          <img src="https://via.placeholder.com/150" alt="Profile Photo" id="profile-pic">
-          <div class="photo-buttons">
-            <input type="file" id="photo-input" accept="image/*" style="display:none;">
-            <button class="btn" id="change-photo">Change Photo</button>
-            <button class="btn" id="remove-photo">Remove Photo</button>
-          </div>
-        </div>
-        <form id="profile-form">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" placeholder="Your Name" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="you@example.com" required>
-          </div>
-          <div class="form-group">
-            <label for="university">University</label>
-            <input type="text" id="university" placeholder="University Name" required>
-          </div>
-          <div class="form-group">
-            <label for="bio">Bio</label>
-            <textarea id="bio" placeholder="Tell something about yourself..." rows="4"></textarea>
-          </div>
-          <button type="submit" class="settings-logout">Save Changes</button>
-        </form>
-      </div>
-    </div>
-
     <!-- Settings -->
     <div class="page" id="settings">
       <h1>Settings</h1>
       <p>Adjust your preferences here...</p>
       <button class="settings-logout" id="logout"><a href="dashboard.html">Logout</a></button>
-    </div>
-
-    <!-- Notifications -->
-    <div class="page" id="notifications">
-      <h1>Notifications</h1>
-      <p>All your alerts will appear here...</p>
     </div>
 
     <!-- Chat -->

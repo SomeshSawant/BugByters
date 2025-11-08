@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Events | Campus Connect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FFFEFE;
+      --secondary: #534171;
+      --accent: #282F3C;
+      --highlight: #FFAD33;
+      --success: #2ecc71;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #534171, #282F3C);
+      color: var(--primary);
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      color: var(--highlight);
+      font-size: 2rem;
+    }
+
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .event-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .event-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--highlight);
+    }
+
+    .event-desc {
+      margin: 10px 0;
+      color: #eee;
+    }
+
+    .event-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-upvote {
+      background: var(--secondary);
+      color: #fff;
+    }
+
+    .btn-upvote.upvoted {
+      background: var(--success);
+      color: #fff;
+      pointer-events: none;
+    }
+
+    .btn-bookmark {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-bookmark.bookmarked {
+      background: var(--highlight);
+      color: #fff;
+      pointer-events: none;
+    }
+
+    .comment-section {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .comment {
+      background: rgba(255,255,255,0.15);
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: #fff;
+    }
+
+    .comment-input {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .comment-input input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+
+    .comment-input button {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      background: var(--highlight);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .comment-input button:hover {
+      background: #ffaa00;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Community Events & Discussions</h1>
+  </header>
+
+  <div class="event-list" id="eventList">
+    <!-- Dummy Events -->
+    <div class="event-card">
+      <div class="event-title">AI Fitness Tracker Discussion</div>
+      <div class="event-desc">Brainstorm ideas on how to improve AI posture correction and real-time feedback for workout videos.</div>
+      <div class="event-actions">
+        <button class="btn btn-upvote">Upvote</button>
+        <button class="btn btn-bookmark">Bookmark</button>
+      </div>
+      <div class="comment-section">
+        <div class="comment">John: Could we integrate heart rate data?</div>
+        <div class="comment">Sana: Maybe also add personalized workout plans.</div>
+      </div>
+      <div class="comment-input">
+        <input type="text" placeholder="Add a comment...">
+        <button>Add</button>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <div class="event-title">Smart Garden IoT Project</div>
+      <div class="event-desc">Discuss ideas for automating garden watering and sunlight monitoring using IoT sensors.</div>
+      <div class="event-actions">
+        <button class="btn btn-upvote">Upvote</button>
+        <button class="btn btn-bookmark">Bookmark</button>
+      </div>
+      <div class="comment-section">
+        <div class="comment">Raj: We could add a mobile alert when water levels are low.</div>
+      </div>
+      <div class="comment-input">
+        <input type="text" placeholder="Add a comment...">
+        <button>Add</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Handle Upvote & Bookmark toggle
+    document.addEventListener('click', function(e){
+      if(e.target.classList.contains('btn-upvote')){
+        e.target.classList.add('upvoted');
+        e.target.textContent = 'Upvoted';
+      }
+      if(e.target.classList.contains('btn-bookmark')){
+        e.target.classList.add('bookmarked');
+        e.target.textContent = 'Bookmarked';
+      }
+      if(e.target.tagName === 'BUTTON' && e.target.parentElement.classList.contains('comment-input')){
+        const input = e.target.previousElementSibling;
+        if(input.value.trim() !== ''){
+          const commentSec = e.target.parentElement.previousElementSibling;
+          const newComment = document.createElement('div');
+          newComment.classList.add('comment');
+          newComment.textContent = input.value.trim();
+          commentSec.appendChild(newComment);
+          input.value = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

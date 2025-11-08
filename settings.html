@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | Campus Connect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FFFEFE;
+      --secondary: #534171;
+      --accent: #282F3C;
+      --highlight: #FFAD33;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #534171, #282F3C);
+      color: var(--primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: var(--highlight);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .settings-container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .settings-btn {
+      background: var(--secondary);
+      border: none;
+      color: white;
+      padding: 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .settings-btn:hover {
+      background: var(--highlight);
+      color: var(--accent);
+    }
+
+    .disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: rgba(255,255,255,0.2);
+    }
+
+    @media(max-width: 500px){
+      .settings-container {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Settings</h1>
+  <div class="settings-container">
+    <!-- Logout -->
+    <button class="settings-btn" onclick="logout()">Logout</button>
+
+    <!-- Go to Dashboard -->
+    <button class="settings-btn" onclick="goDashboard()">Go to Dashboard</button>
+
+    <!-- Light/Dark Mode Disabled -->
+    <button class="settings-btn disabled">Light/Dark Mode Disabled</button>
+  </div>
+
+  <script>
+    function logout(){
+      // Clear session/local storage if any (optional)
+      window.location.href = 'index.html';
+    }
+
+    function goDashboard(){
+      window.location.href = 'dashboard.html';
+    }
+  </script>
+</body>
+</html>

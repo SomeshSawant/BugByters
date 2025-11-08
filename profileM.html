@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FFFEFE;
+      --secondary: #534171;
+      --accent: #282F3C;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top left, var(--secondary), var(--accent));
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .profile-card {
+      background: var(--primary);
+      width: 100%;
+      max-width: 460px;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .profile-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid var(--secondary);
+      object-fit: cover;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-photo:hover {
+      transform: scale(1.05);
+    }
+
+    h2 {
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 0.95rem;
+      transition: border 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow: 0 0 5px rgba(83,65,113,0.3);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: var(--secondary);
+      border: none;
+      color: white;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: var(--accent);
+    }
+
+    .error {
+      color: #d32f2f;
+      font-size: 0.9rem;
+      margin-top: -5px;
+      margin-bottom: 10px;
+    }
+
+    .go-dashboard {
+      margin-top: 15px;
+      background: transparent;
+      border: 2px solid var(--secondary);
+      color: var(--secondary);
+    }
+
+    .go-dashboard:hover {
+      background: var(--secondary);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-card">
+    <h2>Complete Your Profile</h2>
+    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="profilePreview" class="profile-photo" alt="Profile">
+    <input type="file" id="profilePhoto" accept="image/*" hidden>
+
+    <form id="profileForm">
+      <input type="text" id="name" placeholder="Full Name" required>
+      <div id="nameError" class="error"></div>
+
+      <input type="text" id="college" placeholder="College" required>
+      <div id="collegeError" class="error"></div>
+
+      <input type="text" id="branch" placeholder="Branch / Year" required>
+      <div id="branchError" class="error"></div>
+
+      <input type="text" id="skills" placeholder="Skills (comma separated)" required>
+      <div id="skillsError" class="error"></div>
+
+      <textarea id="interests" rows="3" placeholder="Interests" ></textarea>
+      <div id="interestsError" class="error"></div>
+
+      <input type="url" id="github" placeholder="GitHub Profile URL">
+      <div id="githubError" class="error"></div>
+
+      <input type="url" id="linkedin" placeholder="LinkedIn Profile URL">
+      <div id="linkedinError" class="error"></div>
+
+      <input type="url" id="portfolio" placeholder="Portfolio Website URL">
+      <div id="portfolioError" class="error"></div>
+
+      <textarea id="projects" rows="2" placeholder="Past Projects / Achievements"></textarea>
+
+      <button type="submit">Save Profile</button>
+    </form>
+
+    <button class="go-dashboard" id="goDashboard">Go to Dashboard</button>
+  </div>
+
+  <script type="module">
+    // ✅ Firebase SDK Import
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+
+    
+
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+    apiKey: "AIzaSyANzy2Fl54zbSLMMQtRP6uKEEsqMpFxk_c",
+    authDomain: "campus-connect-27e8e.firebaseapp.com",
+    projectId: "campus-connect-27e8e",
+    storageBucket: "campus-connect-27e8e.firebasestorage.app",
+    messagingSenderId: "1093775901397",
+    appId: "1:1093775901397:web:943f9d7425a417d5a1d85c",
+    measurementId: "G-VJYLCCP55E"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    const profilePhoto = document.getElementById('profilePhoto');
+    const profilePreview = document.getElementById('profilePreview');
+    const goDashboard = document.getElementById('goDashboard');
+    let uploadedFile = null;
+
+    // 📸 Image Upload Preview
+    profilePreview.addEventListener('click', () => profilePhoto.click());
+    profilePhoto.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        uploadedFile = file;
+        const reader = new FileReader();
+        reader.onload = () => (profilePreview.src = reader.result);
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // 🧭 Go to Dashboard
+    goDashboard.addEventListener('click', () => {
+      window.location.href = "dashboard.html";
+    });
+
+    // ⚡ Save Profile
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fields = ["name", "college", "branch", "skills", "interests"];
+      let valid = true;
+      fields.forEach(id => {
+        const value = document.getElementById(id).value.trim();
+        const errorDiv = document.getElementById(id + "Error");
+        if (!value) {
+          errorDiv.textContent = "This field is required.";
+          valid = false;
+        } else {
+          errorDiv.textContent = "";
+        }
+      });
+
+      const urlFields = ["github", "linkedin", "portfolio"];
+      const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+      urlFields.forEach(id => {
+        const value = document.getElementById(id).value.trim();
+        const errorDiv = document.getElementById(id + "Error");
+        if (value && !urlRegex.test(value)) {
+          errorDiv.textContent = "Invalid URL format.";
+          valid = false;
+        } else {
+          errorDiv.textContent = "";
+        }
+      });
+
+      if (!valid) return;
+
+      const data = {
+        name: document.getElementById('name').value,
+        college: document.getElementById('college').value,
+        branch: document.getElementById('branch').value,
+        skills: document.getElementById('skills').value,
+        interests: document.getElementById('interests').value,
+        github: document.getElementById('github').value,
+        linkedin: document.getElementById('linkedin').value,
+        portfolio: document.getElementById('portfolio').value,
+        projects: document.getElementById('projects').value,
+      };
+
+      let photoURL = profilePreview.src;
+      if (uploadedFile) {
+        const photoRef = ref(storage, `profiles/${Date.now()}_${uploadedFile.name}`);
+        await uploadBytes(photoRef, uploadedFile);
+        photoURL = await getDownloadURL(photoRef);
+      }
+      data.photoURL = photoURL;
+
+      await setDoc(doc(db, "profiles", data.name), data);
+      alert("Profile saved successfully!");
+      window.location.href = "dashboard.html";
+    });
+  </script>
+</body>
+</html>
