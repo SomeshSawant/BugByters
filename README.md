@@ -65,3 +65,8 @@ Existing platforms are either too professional or lack skill-based discovery. **
 ```bash
 git clone https://github.com/SomeshSawant/BugByters.git
 # Team_BugByters
+
+---
+
+## Hosted website link
+https://someshsawant.github.io/BugByters/
