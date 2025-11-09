@@ -64,3 +64,4 @@ Existing platforms are either too professional or lack skill-based discovery. **
 1. **Clone the repository**
 ```bash
 git clone https://github.com/SomeshSawant/BugByters.git
+# Team_BugByters
