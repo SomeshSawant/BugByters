@@ -1,4 +1,4 @@
-# 🚀 Campus Connect — The Ultimate Student Collaboration Hub
+# 🚀 Campus Connect: The Ultimate Student Collaboration Hub
 
 
 ## 🌟 Overview
